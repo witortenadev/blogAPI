@@ -1,0 +1,20 @@
+{
+    "name": "express-api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "@vercel/node": "^1.15.4",
+        "bcrypt": "^5.1.1",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.10.1",
+        "vercel": "^41.1.4"
+    },
+    "engines": {
+        "node": "16.x"
+    }
+}
