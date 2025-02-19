@@ -6,11 +6,13 @@ const jwt = require('jsonwebtoken')
 const userRoutes = require('./routes/userRoutes')
 const postRoutes = require('./routes/postRoutes')
 const connectDB = require('./database/connect')
+const cors = require('cors')
 
 // Database
 connectDB()
 
 // Middleware
+app.use(cors())
 dotenv.config()
 app.use(express.json())
 
