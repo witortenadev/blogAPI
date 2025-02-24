@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2I4Y2E5YWU0NzE0NjBjMDE1Zjc0MzYiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQwNDI2ODUyLCJleHAiOjE3NDA0MzA0NTJ9.njVZh2aMxafpb1K-tP7T_F4SKNmRS87SmiCPhLvcCBQ' // Set your JWT token here for authorization
+                    'Authorization': 'Bearer token' // Set your JWT token here for authorization
                 }
             })
             .then(response => response.json())
