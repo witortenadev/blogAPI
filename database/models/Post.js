@@ -22,10 +22,6 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  image: {
-    type: String, // This will store the file path or URL of the image
-    default: null  // Optional: you can set a default value if no image is uploaded
-  }
 })
 
 const Post = mongoose.model('Post', postSchema)
