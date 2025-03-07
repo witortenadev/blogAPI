@@ -12,6 +12,26 @@ router.get('/', authenticateUser, (req, res) => {
     res.send('Hello user')
 })
 
+router.get('/:id', authenticateUser, async (req, res) => {
+    const { id } = req.params
+
+    if (req.user.userId !== id) {
+        return res.status(403).json({ message: 'Access denied.' })
+    }
+
+    try {
+        const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
+        }
+
+        res.status(200).json(user)
+    } catch (err) {
+        console.error({ message: 'An error occurred fetching the user.', err })
+        res.status(500).json({ message: 'Error fetching user' })
+    }
+})
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
 
