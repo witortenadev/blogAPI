@@ -95,9 +95,9 @@ router.get('/star/:postId', authenticate, async (req, res) => {
             return res.status(404).json({ message: 'Post not found.' });
         }
         
-        const user = await User.findById(req.user.userId);
+        const user = await User.findById(req.user._id);
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User not found.', user: req.user });
         }
 
         if (user.starredPosts.includes(postId)) {

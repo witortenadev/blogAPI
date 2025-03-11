@@ -32,6 +32,27 @@ router.get('/:id', authenticateUser, async (req, res) => {
     }
 })
 
+router.get('/starred/:postId', authenticateUser, async (req, res) => {
+    const { postId } = req.params
+    const { userId } = req.user
+
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
+        }
+        
+        let starredPosts = user.starredPosts || []
+        if (starredPosts.includes(postId)) {
+            res.status(200).json({ message: 'Post is starred', starred: true })
+        } else {
+            res.status(200).json({ message: 'Post is not starred', starred: false })
+        }} catch (err) {
+        console.error({ message: 'An error occurred fetching the user.', err })
+        res.status(500).json({ message: 'Error fetching user' })
+    }
+})
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
 
