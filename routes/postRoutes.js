@@ -106,6 +106,10 @@ router.get('/star/:postId', authenticate, async (req, res) => {
 
         user.starredPosts.push(postId);
         post.stars += 1;
+        await user.save();
+        await post.save();
+        
+        res.status(200).json({ message: 'Post starred successfully.' });
     } catch (err) {
         console.error('Error starring post:', err);
         res.status(500).json({ message: 'Error starring post.' });
