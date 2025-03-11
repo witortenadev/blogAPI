@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Post = require('../database/models/Post')
+const User = require('../database/models/User')
 const authenticate = require('../middleware/jwtAuthentication')
 
 // Get All Posts by Author Route
