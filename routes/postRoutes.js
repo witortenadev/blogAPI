@@ -85,6 +85,31 @@ router.post('/create', authenticate, async (req, res) => {
     }
 });
 
+router.get('/star/:postId', authenticate, async (req, res) => {
+    const { postId } = req.params;
+
+    try {
+        const post = await Post.findById(postId)
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found.' });
+        }
+        
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        if (user.starredPosts.includes(postId)) {
+            return res.status(400).json({ message: 'Post already starred.' });
+        }
+
+        user.starredPosts.push(postId);
+        post.stars += 1;
+    } catch (err) {
+        console.error('Error starring post:', err);
+        res.status(500).json({ message: 'Error starring post.' });
+    }
+})
 
 // Edit Post Route
 router.put('/edit/:id', authenticate, async (req, res) => {

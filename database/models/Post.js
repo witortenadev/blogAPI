@@ -14,6 +14,10 @@ const postSchema = new mongoose.Schema({
     ref: 'User',  // Reference to the User model
     required: true
   },
+  stars: {
+    type: Number,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now
