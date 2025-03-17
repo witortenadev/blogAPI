@@ -100,8 +100,12 @@ router.get('/star/:postId', authenticate, async (req, res) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        if (user.starredPosts.includes(postId)) {
-            return res.status(400).json({ message: 'Post already starred.' });
+         if (user.starredPosts.includes(postId)) {
+            post.stars -= 1;
+            user.starredPosts = user.starredPosts.filter(id => id !== postId);
+            await user.save();
+            await post.save();
+            return res.status(200).json({ message: 'Post unstarred successfully.' });
         }
 
         user.starredPosts.push(postId);
