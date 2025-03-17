@@ -102,7 +102,7 @@ router.get('/star/:postId', authenticate, async (req, res) => {
 
          if (user.starredPosts.includes(postId)) {
             post.stars -= 1;
-            user.starredPosts = user.starredPosts.filter(id => id !== postId);
+            user.starredPosts = user.starredPosts.filter(id => id.toString() !== postId);
             await user.save();
             await post.save();
             return res.status(200).json({ message: 'Post unstarred successfully.' });
