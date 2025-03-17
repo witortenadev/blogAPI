@@ -1,0 +1,11 @@
+### Star a Post
+# Replace `<postId>` with the actual post ID you want to star and `<yourAuthToken>` with the valid JWT token.
+POST http://localhost:5000/star/<postId> HTTP/1.1
+Authorization: Bearer <yourAuthToken>
+Content-Type: application/json
+
+### Unstar a Post
+# Replace `<postId>` with the actual post ID you want to unstar and `<yourAuthToken>` with the valid JWT token.
+GET http://localhost:5000/star/<postId> HTTP/1.1
+Authorization: Bearer <yourAuthToken>
+Content-Type: application/json
