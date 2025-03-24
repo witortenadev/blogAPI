@@ -25,24 +25,44 @@ router.get('/author/:authorId', async (req, res) => {
     }
 })
 
-// Get All Posts Route
+// Get All Posts Route with Pagination
 router.get('/all', async (req, res) => {
-    try {
-        // Fetch all posts from the database
-        const posts = await Post.find().populate('author', 'username email') // Populate author info (optional)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
 
-        // Check if there are no posts
+    // Calculate how many posts to skip based on the page number and limit
+    const skip = (page - 1) * limit;
+
+    try {
+        // Fetch paginated posts from the database
+        const posts = await Post.find()
+            .skip(skip)         // Skip the posts based on the page number
+            .limit(limit)       // Limit the number of posts per page
+            .populate('author', 'username email');  // Populate author info (optional)
+
+        // Check if no posts are found
         if (!posts.length) {
-            return res.status(404).json({ message: 'No posts found.' })
+            return res.status(404).json({ message: 'No posts found.' });
         }
 
-        // Send the posts as a response
-        res.status(200).json({ posts })
+        // Get the total number of posts in the database to calculate the total pages
+        const totalPosts = await Post.countDocuments();
+
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(totalPosts / limit);
+
+        // Send the posts, along with pagination information
+        res.status(200).json({
+            posts,
+            currentPage: page,
+            totalPages: totalPages,
+            totalPosts: totalPosts,
+        });
     } catch (err) {
-        console.error('Error fetching posts:', err)
-        res.status(500).json({ message: 'Error fetching posts.' })
+        console.error('Error fetching posts:', err);
+        res.status(500).json({ message: 'Error fetching posts.' });
     }
-})
+});
 
 // Get Post by ID
 router.get('/:id', async (req, res) => {
