@@ -52,7 +52,7 @@ router.post('/create', authenticate, async (req, res) => {
     }
 });
 
-router.delete('/delete:id', authenticate, async (req, res) => {
+router.delete('/delete/:id', authenticate, async (req, res) => {
     const commentId = req.params.id
 
     try{
