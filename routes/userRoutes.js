@@ -12,6 +12,22 @@ router.get('/', authenticateUser, (req, res) => {
     res.send('Hello user')
 })
 
+router.get('/username/:id', async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const user = await User.findById(id).select('username')
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
+        }
+
+        res.status(200).json({ username: user.username })
+    } catch (err) {
+        console.error({ message: 'An error occurred fetching the username.', err })
+        res.status(500).json({ message: 'Error fetching username' })
+    }
+})
+
 router.get('/:id', authenticateUser, async (req, res) => {
     const { id } = req.params
 
