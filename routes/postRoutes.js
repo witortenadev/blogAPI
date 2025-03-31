@@ -64,6 +64,31 @@ router.get('/all', async (req, res) => {
     }
 });
 
+router.get('/most-liked', async (req, res) => {
+    try {
+        const posts = await Post.find().sort({ stars: -1 })
+        if(!posts) {
+            return res.status(404).json({ message: 'No found.' })
+        }
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const paginatedPosts = posts.slice(skip, skip + limit);
+        const totalPages = Math.ceil(posts.length / limit);
+
+        res.status(200).json({
+            posts: paginatedPosts,
+            currentPage: page,
+            totalPages: totalPages,
+            totalPosts: posts.length,
+        });
+    } catch (err) {
+        console.error('Error fetching most liked posts:', err)
+        res.status(500).json({ message: 'Error fetching most liked posts.' })
+    }
+});
+
 // Get Post by ID
 router.get('/:id', async (req, res) => {
     const postId = req.params.id
