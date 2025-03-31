@@ -25,7 +25,7 @@ router.get('/author/:authorId', async (req, res) => {
     }
 })
 
-app.get('/search', async (req, res) => {
+router.get('/search', async (req, res) => {
     const { query } = req.query;
 
     // Check if the query is missing or empty
