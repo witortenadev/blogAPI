@@ -37,7 +37,8 @@ router.get('/all', async (req, res) => {
         // Fetch paginated posts from the database
         const posts = await Post.find()
             .skip(skip)         // Skip the posts based on the page number
-            .limit(limit)       // Limit the number of posts per page
+            .limit(limit) // Limit the number of posts per page
+            .sort({ createdAt: -1 }) // Sorts by creation date, newest first
             .populate('author', 'username email');  // Populate author info (optional)
 
         // Check if no posts are found
