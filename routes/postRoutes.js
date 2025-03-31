@@ -25,6 +25,18 @@ router.get('/author/:authorId', async (req, res) => {
     }
 })
 
+app.get('/search', async (req, res) => {
+    const { query } = req.query;
+    try {
+        const post = await Post.find({ 
+            title: { $regex: query, $options: 'i' }  // Case-insensitive search
+        });
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Get All Posts Route with Pagination
 router.get('/all', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
