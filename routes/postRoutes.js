@@ -27,13 +27,21 @@ router.get('/author/:authorId', async (req, res) => {
 
 app.get('/search', async (req, res) => {
     const { query } = req.query;
+
+    // Check if the query is missing or empty
+    if (!query || query.trim() === "") {
+        return res.status(400).json({ message: "Query parameter is required" });
+    }
+
     try {
-        const post = await Post.find({ 
+        const posts = await Post.find({ 
             title: { $regex: query, $options: 'i' }  // Case-insensitive search
         });
-        res.json(post);
+
+        res.json(posts);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error("Search Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
