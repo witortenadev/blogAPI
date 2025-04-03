@@ -42,7 +42,7 @@ router.get('/:id', authenticateUser, async (req, res) => {
             return res.status(404).json({ message: 'User not found.' })
         }
 
-        res.status(200).json(user.select('-password -__v'))
+        res.status(200).json(user)
     } catch (err) {
         console.error({ message: 'An error occurred fetching the user.', err })
         res.status(500).json({ message: 'Error fetching user' })
