@@ -15,6 +15,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isVerified: {
+        type: Boolean,
+        default: false, 
+    },
     starredPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
