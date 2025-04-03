@@ -131,7 +131,7 @@ router.post('/register', async (req, res) => {
             },
         });
 
-        const verificationUrl = `https://bloggyapi.onrender.com/verify/${emailToken}`;
+        const verificationUrl = `https://bloggyapi.onrender.com/user/verify/${emailToken}`;
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
