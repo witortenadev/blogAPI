@@ -121,7 +121,6 @@ router.post('/register', async (req, res) => {
         const emailToken = jwt.sign(
             { userId: newUser._id, email: newUser.email },
             process.env.EMAIL_TOKEN_SECRET,
-            { expiresIn: '1h' }
         );
 
         const transporter = nodemailer.createTransport({
